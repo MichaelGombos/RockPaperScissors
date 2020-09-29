@@ -2,8 +2,16 @@
 <html>
     <body>
         <script>
+            let playerSelection = window.prompt("Rock Paper Or Scissors?");
+            let computerSelection = computerGeneration();
+            
+            function computerGeneration()
+            {
+                let compNum = Math.floor(Math.random() * 3);
+                console.log(compNum);
+            }
 
         </script>
-        <h1> oh brother</h1>
+        <h1>Played using the console, press F12</h1>
     </body>
 </html>
