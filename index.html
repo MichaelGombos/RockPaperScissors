@@ -2,15 +2,105 @@
 <html>
     <body>
         <script>
-            let playerSelection = window.prompt("Rock Paper Or Scissors?");
-            let computerSelection = computerGeneration();
             
-            function computerGeneration()
+            
+            
+            
+            
+            
+            let playerWins = 0;
+            let GamesPlayed = 0;
+            
+            game(5);
+            function game(runs)
             {
-                let compNum = Math.floor(Math.random() * 3);
-                console.log(compNum);
+                
+                for(let i = 0; i < runs; i++)
+                {
+                    let playerSelection = prompt("rock paper scissors SHOOT! (enter a string)");
+                    let computerSelection = computerGeneration();
+                    
+                    let result = PlayRound(playerSelection, computerSelection)
+
+                    console.log(result);
+                    
+                    if(result == "Win")
+                    {
+                        
+                        playerWins++;
+                    }
+                    console.log(`player :: ${ playerSelection } | cpu :: ${computerSelection} | result :: ${result}`)
+                    
+                }
+                console.log(playerWins);
+                console.log(`gamesPlayed :: ${runs} gamesWon :: ${playerWins}`);
+
             }
 
+            function PlayRound(playerSelection, computerSelection)
+            {
+                if(playerSelection == "rock")
+                {
+                    if(computerSelection == "rock")
+                    {
+                        return "Tie";
+                    }
+                    if(computerSelection == "paper")
+                    {
+                        return "Loss";
+                    }
+                    if(computerSelection == "scissors")
+                    {
+                        return "Win";
+                    }
+                }
+                if(playerSelection == "scissors")
+                {
+                    if(computerSelection == "rock")
+                    {
+                        return "Loss";
+                    }
+                    if(computerSelection == "paper")
+                    {
+                        return "Win";
+                    }
+                    if(computerSelection == "scissors")
+                    {
+                        return "Tie";
+                    }
+                }
+                if(playerSelection == "paper")
+                {
+                    if(computerSelection == "rock")
+                    {
+                        return "Win";
+                    }
+                    if(computerSelection == "paper")
+                    {
+                        return "Tie";
+                    }
+                    if(computerSelection == "scissors")
+                    {
+                        return "Loss";
+                    }
+                }
+            }
+
+
+
+
+
+            function computerGeneration()
+            {
+                /**
+                 *  0 = rock
+                 *  1 = scissors
+                 *  2 = paper
+                 **/
+                let Selections = ["rock","paper","scissors"];
+                let compNum = Math.floor(Math.random() * 3);
+                return Selections[compNum];
+            }
         </script>
         <h1>Played using the console, press F12</h1>
     </body>
