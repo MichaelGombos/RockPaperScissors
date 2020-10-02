@@ -1,97 +1,144 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <script>
-            
-            
-            
-            
-            
-            
-            let playerWins = 0;
-            let GamesPlayed = 0;
-            
-            game(5);
-            function game(runs)
-            {
-                
-                for(let i = 0; i < runs; i++)
-                {
-                    let playerSelection = prompt("rock paper scissors SHOOT! (enter a string)");
-                    let computerSelection = computerGeneration();
-                    
-                    let result = PlayRound(playerSelection, computerSelection)
+<body>
+    <div data-choice="rock"> 
+        <button  class='btn'>rock</button>
+    </div>
+    <div data-choice="paper">
+        <button class='btn'>paper</button>
+    </div>
+    <div data-choice="scissors">
+        <button class='btn'>scissors</button>
+    </div>
 
-                    console.log(result);
-                    
-                    if(result == "Win")
-                    {
-                        
-                        playerWins++;
-                    }
-                    console.log(`player :: ${ playerSelection } | cpu :: ${computerSelection} | result :: ${result}`)
-                    
-                }
-                console.log(playerWins);
-                console.log(`gamesPlayed :: ${runs} gamesWon :: ${playerWins}`);
+    <div id="results">
+        <div id="wins">
+            wins:
+        </div>
+        <div id="losses">
+            losses:
+        </div>
+        <div id="ties">
+            ties:
+        </div>
+        <div id="totalGames">
+            totalGames:
+        </div>
 
-            }
+        <div id="endGame">
+            results:
+        </div>
+    </div>
+    <script>
+        let wins = 0;
+        let ties = 0;
+        let losses = 0;
+        let totalGames = 0;
+        
 
-            function PlayRound(playerSelection, computerSelection)
-            {
-                if(playerSelection == "rock")
-                {
-                    if(computerSelection == "rock")
-                    {
-                        return "Tie";
-                    }
-                    if(computerSelection == "paper")
-                    {
-                        return "Loss";
-                    }
-                    if(computerSelection == "scissors")
-                    {
-                        return "Win";
-                    }
+        const buttons = Array.from(document.querySelectorAll('.btn'));
+        buttons.forEach(button => button.addEventListener('click',PlayRound))
+        
+        function PlayRound(e) {
+
+
+            playerSelection = e.target.innerText;
+            let computerSelection = computerGeneration();
+            console.log(playerSelection);
+            
+            if (playerSelection == "rock") {
+                if (computerSelection == "rock") {
+                    //tie
+                    ties++;
+                    upDateStats("ties",ties);
                 }
-                if(playerSelection == "scissors")
-                {
-                    if(computerSelection == "rock")
-                    {
-                        return "Loss";
-                    }
-                    if(computerSelection == "paper")
-                    {
-                        return "Win";
-                    }
-                    if(computerSelection == "scissors")
-                    {
-                        return "Tie";
-                    }
+                if (computerSelection == "paper") {
+                    //loss
+                    losses++;
+                    upDateStats("losses",losses);
                 }
-                if(playerSelection == "paper")
-                {
-                    if(computerSelection == "rock")
-                    {
-                        return "Win";
-                    }
-                    if(computerSelection == "paper")
-                    {
-                        return "Tie";
-                    }
-                    if(computerSelection == "scissors")
-                    {
-                        return "Loss";
-                    }
+                if (computerSelection == "scissors") {
+                    //win
+                    wins++;
+                    upDateStats("wins",wins);
                 }
             }
-            function computerGeneration()
-            {
-                let Selections = ["rock","paper","scissors"];
-                let compNum = Math.floor(Math.random() * 3);
-                return Selections[compNum];
+            if (playerSelection == "scissors") {
+                if (computerSelection == "rock") {
+                    //loss
+                    losses++;
+                    upDateStats("losses",losses);
+                }
+                if (computerSelection == "paper") {
+                    //win
+                    wins++;
+                    upDateStats("wins",wins);
+                }
+                if (computerSelection == "scissors") {
+                    //tie
+                    ties++;
+                    upDateStats("ties",ties);
+                }
             }
-        </script>
-        <h1>Played using the console, press F12</h1>
-    </body>
+            if (playerSelection == "paper") {
+                if (computerSelection == "rock") {
+                    //win
+                    wins++;
+                    upDateStats("wins",wins);
+                }
+                if (computerSelection == "paper") {
+                    //tie
+                    ties++;
+                    upDateStats("ties",ties);
+                }
+                if (computerSelection == "scissors") {
+                    //loss
+                    losses++;
+                    upDateStats("losses",losses);
+                }
+            }
+            totalGames++;
+            upDateStats("totalGames",totalGames);
+            console.log(`wins${wins} losses${losses} ties${ties}`);
+            if(totalGames >= 5)
+            {
+                const endGame = document.querySelector('#endGame');
+                let endResults = "";
+                if(wins > losses)
+                {
+                    endResults = "You win :D";
+                }
+                else if(wins == losses)
+                {
+                    endResults = "You struck a draw :|";
+                }
+                else{
+                    endResults = "Beaten by the machine D: ";
+                }
+                endGame.innerHTML = endResults;
+            }
+        }
+
+
+        function computerGeneration() {
+            let Selections = ["rock", "paper", "scissors"];
+            let compNum = Math.floor(Math.random() * 3);
+            return Selections[compNum];
+        }
+
+        function upDateStats(statCode,count)
+        {
+            const stat = document.querySelector(`#${statCode}`);
+            console.log(stat);
+            let newStat = `${statCode}: ${count} `;
+            stat.innerHTML = newStat;
+            //stat.appendChild(statText);
+        }
+
+
+        
+    </script>
+    <h1>Can you beat the machine in 5 turns?</h1>
+</body>
+
 </html>
